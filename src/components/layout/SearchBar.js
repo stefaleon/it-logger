@@ -4,17 +4,13 @@ import PropTypes from 'prop-types';
 import { searchLogs } from '../../actions/logActions';
 
 const SearchBar = ({ searchLogs }) => {
-  const [text, setText] = useState({
-    searchTerm: '',
-  });
+  const [text, setText] = useState('');
 
-  const { searchTerm } = text;
-
-  const onChange = (e) => setText({ searchTerm: e.target.value });
+  const onChange = (e) => setText(e.target.value);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    searchLogs(searchTerm);
+    searchLogs(text);
   };
 
   return (
