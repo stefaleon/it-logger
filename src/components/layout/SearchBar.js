@@ -1,26 +1,32 @@
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { searchLogs } from '../../actions/logActions';
 
 const SearchBar = ({ searchLogs }) => {
-  const text = useRef('');
+  const [text, setText] = useState({
+    searchTerm: '',
+  });
 
-  const onChange = (e) => {
-    searchLogs(text.current.value);
+  const { searchTerm } = text;
+
+  const onChange = (e) => setText({ searchTerm: e.target.value });
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    searchLogs(searchTerm);
   };
 
   return (
     <nav style={{ marginBottom: '30px' }} className='blue'>
       <div className='nav-wrapper'>
-        <form>
+        <form onSubmit={onSubmit}>
           <div className='input-field'>
             <input
               id='search'
               type='search'
               placeholder='Search Logs..'
-              ref={text}
-              onChange={onChange}
+              onChange={(e) => onChange(e)}
             />
             <label className='label-icon' htmlFor='search'>
               <i className='material-icons'>search</i>
